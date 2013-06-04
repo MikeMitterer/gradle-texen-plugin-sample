@@ -1,0 +1,10 @@
+/*-------------------------------------------------------------------------------------------------
+	#include("copyright.vm")
+#if( $db == 'sqlite') 
+	Generated for SQLite 
+#elseif( $db == 'mysql')
+	Generated for MySQL
+#end
+
+    Generated with Gradle TexenPlugin, BuildScript-Version: 1.0	
+-------------------------------------------------------------------------------------------------*/

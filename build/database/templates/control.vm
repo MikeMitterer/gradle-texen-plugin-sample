@@ -1,0 +1,24 @@
+#*-------------------------------------------------------------------------------------------------
+This is the control template for our HTML
+page generator!
+-------------------------------------------------------------------------------------------------*#
+
+#set ($props = $properties.load("texen.properties"))
+
+#set ($dbs 			= ["sqlite", "mysql"])
+#set ($template 	= $props.getProperty("maintemplate"))
+#set ($dbname 		= $props.getProperty("dbname"))
+#set ($dbuser 		= $props.getProperty("dbuser"))
+#set ($dbpassword 	= $props.getProperty("dbpassword"))
+
+#foreach ($db in $dbs)
+
+    #set ($outputFile = $strings.concat(["database-", $db, "-shema.sql"]))
+    
+    $generator.setInputEncoding("utf-8")
+    $generator.setOutputEncoding("utf-8")
+    $generator.parse($template, $outputFile, "db", $db)
+    $outputFile generated...
+
+#end
+

@@ -1,0 +1,39 @@
+#*
+Hier kommen die Macros
+ - können nicht über include eingebunden werden da das nicht funktioniert
+*#
+
+#macro( prop $propname )
+#if($props.getProperty($propname))$props.getProperty($propname)
+#end
+#end
+
+#macro( ON $tblname )
+#if( $db == 'mysql')ON $tblname#end
+#end
+
+#macro( IF_INDEX_EXISTS )
+#if( $db == 'sqlite')IF EXISTS#end
+#end
+
+#macro( AUTOINCREMENT )
+#if( $db == 'sqlite')AUTOINCREMENT#{else}AUTO_INCREMENT#end
+#end
+
+#macro( DELIMITER $delimiter )
+#if( $db == 'mysql')
+DELIMITER $delimiter
+#{end}
+#end
+
+#macro( CLOSE )
+#if( $db == 'sqlite')
+;
+#{else}
+$$ 
+#{end}
+#end
+
+#macro( SQLECHO $echo )
+select ""; select "$echo";
+#end

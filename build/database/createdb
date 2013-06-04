@@ -1,0 +1,115 @@
+#/bin/sh
+##################################################################
+#
+# Short description
+#
+##################################################################
+
+APPNAME="createdb"
+
+DBNAME="database"
+
+#------------------------------------------------------------------------------
+# Pfadangabe f. SQLite muss mit Eintrag in mybatis.properties übereinstimmen
+
+PATHSQLITE="../../WebContent/WEB-INF"
+#PATHSQLITE="../../src/main/resources/database/"
+
+DBSQLITE="${PATHSQLITE}/${DBNAME}.db"
+DBMYSQL=${DBNAME}
+
+SQLSQLITE="out/${DBNAME}-sqlite-shema.sql"
+SQLMYSQL="out/${DBNAME}-mysql-shema.sql"
+
+#------------------------------------------------------------------------------
+# Lock wird gesetzt
+LOCKDIR="/var/lock"
+LOCKFILE="$LOCKDIR/$APPNAME.lock"
+
+[ -f $LOCKFILE ] && exit 0
+trap 'cleanup' EXIT TERM INT
+
+cleanup () {
+    rm -f $LOCKFILE; 
+    exit 255;
+    }
+    
+touch $LOCKFILE
+
+#------------------------------------------------------------------------------
+# Read settings from settings-file
+#
+SETTINGS_FILE=$APPNAME.conf
+SETTINGS_USER="~/.$SETTINGS_FILE"
+SETTINGS_ETC="/etc/$SETTINGS_FILE"
+
+if test -e $SETTINGS_USER
+then
+    . $SETTINGS_USER
+elif test -e $SETTINGS_ETC
+then
+    . $SETTINGS_ETC
+fi
+
+#------------------------------------------------------------------------------
+# Functions
+#
+
+createSQLITE() {
+	echo "DB location: ${DBSQLITE}"
+	ant texen.gen && sqlite ${DBSQLITE} < ${SQLSQLITE}
+}    
+
+createMySQL() {
+	echo "DB: ${DBMYSQL}"
+	mysql -u root -par7v8mal ${DBMYSQL} < ${SQLMYSQL}
+}    
+
+sampleFunction() {
+PARAM1=$1
+echo "Param1: $PARAM1"
+}  
+
+#------------------------------------------------------------------------------
+# Options
+#
+
+usage()
+    {
+    echo
+    echo "Usage: `basename $0` < > [ ]"
+    echo -e "\t--sqlite    Creates SQLite DB"
+    echo -e "\t--mysql     Creates MySQL Tables"
+    echo -e "\t--help      This message\n"
+    }
+
+
+case "$1" in 
+    help|-help|--help)
+	usage
+	;;
+	
+    sqlite|-sqlite|--sqlite)
+	createSQLITE
+	;;	
+	
+    mysql|-mysql|--mysql)
+	createMySQL
+	;;	
+		
+    *)
+	if test "$1" != ""
+	then
+	    #call function
+	    doNothing "Hallo ein Test"
+	else
+	    usage
+	fi
+	;;
+
+esac    
+
+#------------------------------------------------------------------------------
+# Alles OK...
+exit 0
+
