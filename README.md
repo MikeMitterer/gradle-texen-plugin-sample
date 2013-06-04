@@ -1,7 +1,7 @@
 Texen Gradle Plugin Sample
 ====================
 
-This plugin for Gradle allows you to generate all sort of text output. To use it, simply include the required JARs via `buildscript {}` and 'apply' the plugin:
+The [Texen Gradle Plugin](https://github.com/MikeMitterer/gradle-texen-plugin) allows you to generate all sort of text output. 
 
 For further informations pleas go to the **[Plugin-Page](https://github.com/MikeMitterer/gradle-texen-plugin)** 
 
