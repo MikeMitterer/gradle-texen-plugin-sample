@@ -10,19 +10,19 @@
 buildscript {
     repositories {
 		// My local repository, I use this for testing...
-        //maven { url uri("/Volumes/programming/Maven/public.maven.repository") } 
+        maven { url uri("/Volumes/programming/Maven/public.maven.repository") } 
 		
 		// My public GitHub Maven repository
-        maven { url uri("https://raw.github.com/MikeMitterer/public.maven.repository/master") }  
+        //maven { url uri("https://raw.github.com/MikeMitterer/public.maven.repository/master") }  
                          
     }
     dependencies {
-        classpath group: 'at.mikemitterer.gradle', name: 'TexenPlugin', version: '1.3'
+        classpath group: 'at.mikemitterer.gradle', name: 'TexenPlugin', version: '1.5'
     }
 }
 
 apply plugin:'java' 	// applies the java plugin
-apply plugin: 'eclipse'	// Helps crating a Eclipse-Project
+apply plugin: 'idea'	
 apply plugin: 'texen'
 
 sourceCompatibility = 1.6
